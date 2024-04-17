@@ -1,16 +1,18 @@
 var createError = require('http-errors');
 var express = require('express');
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
 var toysRouter = require('./routes/toy');
 
 var app = express();
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
 
 //import mongoose library
 var mongoose = require('mongoose');
@@ -31,11 +33,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/routes/toy.js', toysRouter);
+app.use('/toy', toysRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

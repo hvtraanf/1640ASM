@@ -1,8 +1,11 @@
 <div class="container text-center col-md-6">
-    <form action="/toy/edit/{{toy}}" method = "post">
-    <h1 class="text text-primary text-uppercase"> Add new toys </h1>
-    <div>
-
-    </div>
-    </form>
+    <form action="/toy/edit/{{toy._id}}" method = "post">
+    <h1>Edit student</h1>
+   <label for="">Price</label><br>
+   <input type="number" name="price" value="{{ toy.price }}"><br><br>
+   <label for="">Quantity</label><br>
+   <input type="number" name="quantity"
+   value="{{ toy.quantity }}"
+   ><br><br>
+   <input type="submit" value="Edit">
 </div>

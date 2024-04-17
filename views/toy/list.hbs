@@ -1,11 +1,29 @@
 <h1>Toys List</h1>
+<a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
 
-<ul>
-  {{#each toys}}
-    <li>
-      <p>Name: {{name}}</p>
-      <p>Price: ${{price}}</p>
-      <p>Quantity: {{quantity}}</p>
-    </li>
-  {{/each}}
-</ul>
+<table class="table table-info">
+   <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Image</th>
+      <th>Action</th>
+   </tr>
+   {{#each toyList }}
+   <tr>
+      <td>{{ name }}</td>
+      <td>{{ price }}</td>
+      <td>{{ quantity }}</td>
+      <td>
+        <a href="/toy/detail/{{_id}}">
+          <img src = "{{imageUrl}}" width = "100" height = "100">
+        </a>
+      </td>
+       <td>
+        <a href="/toy/edit/{{ _id }}">Edit</a> |
+        <a href="/toy/edit/{{ _id }}">Buy</a>
+      </td> 
+   </tr>
+   {{/each}}
+
+</table>
