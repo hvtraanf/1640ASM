@@ -32,46 +32,52 @@
    </table>
 
    <script>
-   // Get all the headers
-   var headers = document.querySelectorAll("th");
+      // Get all the headers
+      var headers = document.querySelectorAll("th");
 
-   // Initialize the sort order to 'asc' (ascending)
-   var sortOrder = 'asc';
+      // Initialize the sort order to 'asc' (ascending)
+      var sortOrder = 'asc';
 
-   // Loop through each header
-   for (let i = 0; i < headers.length; i++) {
-      // Add a click event listener to each header
-      headers[i].addEventListener("click", function () {
-         sortTable(i, sortOrder);
-         // Toggle the sort order
-         sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-      });
-   }
+      // Loop through each header
+      for (let i = 0; i < headers.length; i++) {
+         // Add a click event listener to each header
+         headers[i].addEventListener("click", function () {
+            sortTable(i, sortOrder);
+            // Toggle the sort order
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+         });
+      }
 
-   function sortTable(columnIndex, order) {
-      var table = document.querySelector("table");
-      var tbody = table.querySelector("tbody");
+      function sortTable(columnIndex, order) {
+  var table = document.querySelector("table");
+  var tbody = table.querySelector("tbody");
 
-      // Clone the rows
-      var rows = Array.from(tbody.querySelectorAll("tr")).map(row => row.cloneNode(true));
+  // Clone the rows
+  var rows = Array.from(tbody.querySelectorAll("tr")).map(row => row.cloneNode(true));
 
-      // Sort the cloned rows
-      rows.sort(function (rowA, rowB) {
-         var cellA = rowA.cells[columnIndex].textContent;
-         var cellB = rowB.cells[columnIndex].textContent;
-         // Determine the sort direction based on the order parameter
-         if (order === 'asc') {
-            return cellA.localeCompare(cellB);
-         } else {
-            return cellB.localeCompare(cellA);
-         }
-      });
+  // Sort the cloned rows
+  rows.sort(function (rowA, rowB) {
+    var cellA = rowA.cells[columnIndex].textContent;
+    var cellB = rowB.cells[columnIndex].textContent;
 
-      // Replace the table body with the sorted rows
-      var newTbody = document.createElement("tbody");
-      rows.forEach(row => newTbody.appendChild(row));
-      table.replaceChild(newTbody, tbody);
-   }
-</script>
+    // Check if the values are numbers or strings
+    var numA = Number(cellA);
+    var numB = Number(cellB);
+    var isNumber =!isNaN(numA) &&!isNaN(numB);
+
+    // Apply the appropriate comparison method
+    if (isNumber) {
+      return (numA - numB) * (order === 'asc'? 1 : -1);
+    } else {
+      return cellA.localeCompare(cellB) * (order === 'asc'? 1 : -1);
+    }
+  });
+
+  // Replace the table body with the sorted rows
+  var newTbody = document.createElement("tbody");
+  rows.forEach(row => newTbody.appendChild(row));
+  table.replaceChild(newTbody, tbody);
+}
+   </script>
 
 </body>
