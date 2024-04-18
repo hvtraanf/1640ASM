@@ -12,7 +12,15 @@
     <li class="nav-item">
       <a class="paper-btn margin" href="/">Home</a>
       <a class="paper-btn margin" href="/toy/list">Product</a>
+      {{#if user}}
+        <a class="paper-btn margin" href="/logout">Logout</a>
+        <span class="paper-btn margin">Welcome, {{user.username}}!</span>
+      {{else}}
+        <a class="paper-btn margin" href="/register">Register</a>
+        <a class="paper-btn margin" href="/login">Login</a>
+      {{/if}}
     </li>
   </ul>
+  
 </body>
 {{{body}}}

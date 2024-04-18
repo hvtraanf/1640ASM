@@ -3,7 +3,7 @@ var ToysSchema = mongoose.Schema(
    {
       name: {
         type : String,
-            required: true
+        required: true
       },
       price: {
         type: Number,

@@ -1,29 +1,38 @@
-<h1>Toys List</h1>
-<a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 
-<table class="table table-info">
-   <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Image</th>
-      <th>Action</th>
-   </tr>
-   {{#each toyList }}
-   <tr>
-      <td>{{ name }}</td>
-      <td>{{ price }}</td>
-      <td>{{ quantity }}</td>
-      <td>
-        <a href="/toy/detail/{{_id}}">
-          <img src = "{{imageUrl}}" width = "100" height = "100">
-        </a>
-      </td>
-       <td>
-        <a href="/toy/edit/{{ _id }}">Edit</a> |
-        <a href="/toy/edit/{{ _id }}">Buy</a>
-      </td> 
-   </tr>
-   {{/each}}
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-</table>
+<!-- DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+
+<body>
+   <h1>Toys List</h1>
+   <a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
+   <table class="table table-info" id="table1">
+      <tr>
+         <th>Name</th>
+         <th>Price</th>
+         <th>Quantity</th>
+         <th>Image</th>
+         <th>Action</th>
+      </tr>
+      {{#each toyList }}
+      <tr>
+         <td>{{ name }}</td>
+         <td>{{ price }}</td>
+         <td>{{ quantity }}</td>
+         <td>
+         <a href="/toy/detail/{{_id}}">
+            <img src = "{{imageUrl}}" width = "100" height = "100">
+         </a>
+         </td>
+         <td>
+         <a href="/toy/edit/{{ _id }}">Edit</a> |
+         <a href="/toy/edit/{{ _id }}">Buy</a>
+         </td> 
+      </tr>
+      {{/each}}
+   </table>
+</body>
