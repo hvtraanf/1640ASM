@@ -71,7 +71,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = 3000;
+var port = 3001; //Render Port
 app.listen(port);
 
 module.exports = app;

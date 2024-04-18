@@ -1,24 +1,18 @@
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
-
-<!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- DataTables JS -->
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
-
 <body>
    <h1>Toys List</h1>
    <a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
-   <table class="table table-info" id="table1">
-      <tr>
-         <th><a ></a>Name</th>
+   <table class="table table-info" id="toyTable">
+      <center>
+         <tr>
+         <th>Name</th>
          <th>Price</th>
          <th>Quantity</th>
          <th>Image</th>
          <th>Action</th>
       </tr>
-      {{#each toyList }}
+      </center>
+      <center>
+         {{#each toyList }}
       <tr>
          <td>{{ name }}</td>
          <td>{{ price }}</td>
@@ -34,6 +28,44 @@
          </td> 
       </tr>
       {{/each}}
+      </center>
    </table>
+
+<script>
+// Get all the headers
+var headers = document.querySelectorAll("th");
+
+// Loop through each header
+for (let i = 0; i < headers.length; i++) {
+  // Add a click event listener to each header
+  headers[i].addEventListener("click", function() {
+    sortTable(i);
+  });
+}
+
+function sortTable(columnIndex) {
+  var table = document.querySelector("table");
+  var rows = Array.from(table.rows).slice(1); // Convert rows to array and skip the header row
+
+  // Sort rows based on the content of the specified column
+  rows.sort(function(rowA, rowB) {
+    var cellA = rowA.cells[columnIndex].textContent;
+    var cellB = rowB.cells[columnIndex].textContent;
+
+    // Modify this as needed, for example, to sort numbers correctly
+    return cellA.localeCompare(cellB);
+  });
+
+  // Remove existing rows
+  for (let i = 0; i < rows.length; i++) {
+    table.deleteRow(1);
+  }
+
+  // Add sorted rows
+  for (let i = 0; i < rows.length; i++) {
+    table.appendChild(rows[i]);
+  }
+}
+</script>
 
 </body>
