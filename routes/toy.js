@@ -10,11 +10,11 @@ router.get('/list', async (req, res) => {
 });
 
 //Create Toys
-router.get('/add', async(req, res) => {
-   res.render('toy/add', {user: req.session.user});
+router.get('/add', async (req, res) => {
+   res.render('toy/add', { user: req.session.user });
 })
 
-router.post('/add', async(req, res) => {
+router.post('/add', async (req, res) => {
    var toy = req.body;
    await ToysModel.create(toy);
    res.redirect('/toy/list');
@@ -28,13 +28,13 @@ router.get('/delete/:id', async (req, res) => {
 })
 
 //Edit Toys
-router.get('/edit/:id', async(req, res) => {
+router.get('/edit/:id', async (req, res) => {
    let id = req.params.id;
    let toy = await ToysModel.findById(id);
    res.render('toy/edit', { toy, user: req.session.user });
 })
 
-router.post('/edit/:id', async(req, res) => {
+router.post('/edit/:id', async (req, res) => {
    let id = req.params.id;
    let toy = req.body;
    await ToysModel.findByIdAndUpdate(id, toy);
@@ -42,17 +42,17 @@ router.post('/edit/:id', async(req, res) => {
 })
 
 //Details
-router.get('/detail/:id', async(req, res)=>{
+router.get('/detail/:id', async (req, res) => {
    let id = req.params.id;
    let toy = await ToysModel.findById(id);
-   res.render('toy/detail', { toy,user: req.session.user });
+   res.render('toy/detail', { toy, user: req.session.user });
 })
 
 //Add toy to cart
-router.get('/addToCart/:id', async(req, res) => {   
+router.get('/addToCart/:id', async (req, res) => {
    let id = req.params.id;
    let toy = await ToysModel.findById(id);
-   toy.quantity = toy.quantity -1;
+   toy.quantity = toy.quantity - 1;
    toy.save();
    res.redirect('/toy/list');
 

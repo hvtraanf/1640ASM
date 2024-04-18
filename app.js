@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 
@@ -36,6 +37,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Configure Flash
+app.use(flash());
 
 //Configure Session
 app.use(session({
