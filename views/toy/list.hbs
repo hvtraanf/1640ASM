@@ -49,35 +49,34 @@
       }
 
       function sortTable(columnIndex, order) {
-  var table = document.querySelector("table");
-  var tbody = table.querySelector("tbody");
+         var table = document.querySelector("table");
+         var tbody = table.querySelector("tbody");
 
-  // Clone the rows
-  var rows = Array.from(tbody.querySelectorAll("tr")).map(row => row.cloneNode(true));
+         // Clone the rows
+         var rows = Array.from(tbody.querySelectorAll("tr")).map(row => row.cloneNode(true));
 
-  // Sort the cloned rows
-  rows.sort(function (rowA, rowB) {
-    var cellA = rowA.cells[columnIndex].textContent;
-    var cellB = rowB.cells[columnIndex].textContent;
+         // Sort the cloned rows
+         rows.sort(function (rowA, rowB) {
+            var cellA = rowA.cells[columnIndex].textContent;
+            var cellB = rowB.cells[columnIndex].textContent;
 
-    // Check if the values are numbers or strings
-    var numA = Number(cellA);
-    var numB = Number(cellB);
-    var isNumber =!isNaN(numA) &&!isNaN(numB);
+            // Check if the values are numbers or strings
+            var numA = Number(cellA);
+            var numB = Number(cellB);
+            var isNumber = !isNaN(numA) && !isNaN(numB);
 
-    // Apply the appropriate comparison method
-    if (isNumber) {
-      return (numA - numB) * (order === 'asc'? 1 : -1);
-    } else {
-      return cellA.localeCompare(cellB) * (order === 'asc'? 1 : -1);
-    }
-  });
+            // Apply the appropriate comparison method
+            if (isNumber) {
+               return (numA - numB) * (order === 'asc' ? 1 : -1);
+            } else {
+               return cellA.localeCompare(cellB) * (order === 'asc' ? 1 : -1);
+            }
+         });
 
-  // Replace the table body with the sorted rows
-  var newTbody = document.createElement("tbody");
-  rows.forEach(row => newTbody.appendChild(row));
-  table.replaceChild(newTbody, tbody);
-}
+         // Replace the table body with the sorted rows
+         var newTbody = document.createElement("tbody");
+         rows.forEach(row => newTbody.appendChild(row));
+         table.replaceChild(newTbody, tbody);
+      }
    </script>
-
 </body>
