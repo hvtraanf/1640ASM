@@ -48,4 +48,14 @@ router.get('/detail/:id', async(req, res)=>{
    res.render('toy/detail', { toy });
 })
 
+//Add toy to cart
+router.get('/addToCart/:id', async(req, res) => {   
+   let id = req.params.id;
+   let toy = await ToysModel.findById(id);
+   toy.quantity = toy.quantity -1;
+   toy.save();
+   res.redirect('/toy/list');
+
+})
+
 module.exports = router;

@@ -12,7 +12,7 @@
    <a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
    <table class="table table-info" id="table1">
       <tr>
-         <th>Name</th>
+         <th><a ></a>Name</th>
          <th>Price</th>
          <th>Quantity</th>
          <th>Image</th>
@@ -29,10 +29,11 @@
          </a>
          </td>
          <td>
-         <a href="/toy/edit/{{ _id }}">Edit</a> |
-         <a href="/toy/edit/{{ _id }}">Buy</a>
+         <a href="/toy/addToCart/{{ _id }}">Buy</a> |
+         <a href="/toy/edit/{{ _id }}">Edit</a>
          </td> 
       </tr>
       {{/each}}
    </table>
+
 </body>

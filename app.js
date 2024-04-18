@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 
 var toysRouter = require('./routes/toy');
 var userRouter = require('./routes/user');
+var cartRouter = require('./routes/cart');
 
 var app = express();
 
@@ -48,6 +49,11 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/toy', toysRouter);
 app.use('/', userRouter);
+app.use('/', cartRouter);
+
+app.get('*', (req, res, next) => {
+  res.locals.cartRouter = req.session.cartRouter;
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
