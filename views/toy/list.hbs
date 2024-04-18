@@ -2,70 +2,66 @@
    <h1>Toys List</h1>
    <a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
    <table class="table table-info" id="toyTable">
-      <center>
+      <thead>
          <tr>
-         <th>Name</th>
-         <th>Price</th>
-         <th>Quantity</th>
-         <th>Image</th>
-         <th>Action</th>
-      </tr>
-      </center>
-      <center>
+            <th><a></a>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Image</th>
+            <th>Action</th>
+         </tr>
+      </thead>
+      <tbody>
          {{#each toyList }}
-      <tr>
-         <td>{{ name }}</td>
-         <td>{{ price }}</td>
-         <td>{{ quantity }}</td>
-         <td>
-         <a href="/toy/detail/{{_id}}">
-            <img src = "{{imageUrl}}" width = "100" height = "100">
-         </a>
-         </td>
-         <td>
-         <a href="/toy/addToCart/{{ _id }}">Buy</a> |
-         <a href="/toy/edit/{{ _id }}">Edit</a>
-         </td> 
-      </tr>
-      {{/each}}
-      </center>
+         <tr>
+            <td>{{ name }}</td>
+            <td>{{ price }}</td>
+            <td>{{ quantity }}</td>
+            <td>
+               <a href="/toy/detail/{{_id}}">
+                  <img src="{{imageUrl}}" width="100" height="100">
+               </a>
+            </td>
+            <td>
+               <a href="/toy/addToCart/{{ _id }}">Buy</a> |
+               <a href="/toy/edit/{{ _id }}">Edit</a>
+            </td>
+         </tr>
+         {{/each}}
+      </tbody>
    </table>
 
-<script>
-// Get all the headers
-var headers = document.querySelectorAll("th");
+   <script>
+      // Get all the headers
+      var headers = document.querySelectorAll("th");
 
-// Loop through each header
-for (let i = 0; i < headers.length; i++) {
-  // Add a click event listener to each header
-  headers[i].addEventListener("click", function() {
-    sortTable(i);
-  });
-}
+      // Loop through each header
+      for (let i = 0; i < headers.length; i++) {
+         // Add a click event listener to each header
+         headers[i].addEventListener("click", function () {
+            sortTable(i);
+         });
+      }
 
-function sortTable(columnIndex) {
-  var table = document.querySelector("table");
-  var rows = Array.from(table.rows).slice(1); // Convert rows to array and skip the header row
+      function sortTable(columnIndex) {
+         var table = document.querySelector("table");
+         var tbody = table.querySelector("tbody");
 
-  // Sort rows based on the content of the specified column
-  rows.sort(function(rowA, rowB) {
-    var cellA = rowA.cells[columnIndex].textContent;
-    var cellB = rowB.cells[columnIndex].textContent;
+         // Clone the rows
+         var rows = Array.from(tbody.querySelectorAll("tr")).map(row => row.cloneNode(true));
 
-    // Modify this as needed, for example, to sort numbers correctly
-    return cellA.localeCompare(cellB);
-  });
+         // Sort the cloned rows
+         rows.sort(function (rowA, rowB) {
+            var cellA = rowA.cells[columnIndex].textContent;
+            var cellB = rowB.cells[columnIndex].textContent;
+            return cellA.localeCompare(cellB);
+         });
 
-  // Remove existing rows
-  for (let i = 0; i < rows.length; i++) {
-    table.deleteRow(1);
-  }
-
-  // Add sorted rows
-  for (let i = 0; i < rows.length; i++) {
-    table.appendChild(rows[i]);
-  }
-}
-</script>
+         // Replace the table body with the sorted rows
+         var newTbody = document.createElement("tbody");
+         rows.forEach(row => newTbody.appendChild(row));
+         table.replaceChild(newTbody, tbody);
+      }
+   </script>
 
 </body>
