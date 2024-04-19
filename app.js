@@ -6,12 +6,14 @@ var logger = require('morgan');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
 var flash = require('connect-flash');
+var hbs = require('hbs');
 
 var indexRouter = require('./routes/index');
 
 var toysRouter = require('./routes/toy');
 var userRouter = require('./routes/user');
 var cartRouter = require('./routes/cart');
+var brandRouter = require('./routes/brand');
 
 var app = express();
 
@@ -52,8 +54,9 @@ app.use(session({
 //Configure Routers
 app.use('/', indexRouter);
 app.use('/toy', toysRouter);
-app.use('/', userRouter);
-app.use('/', cartRouter);
+app.use('/user', userRouter);
+app.use('/cart', cartRouter);
+app.use('/brand', brandRouter);
 
 app.get('*', (req, res, next) => {
   res.locals.cartRouter = req.session.cartRouter;

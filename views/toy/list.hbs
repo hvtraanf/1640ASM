@@ -5,6 +5,7 @@
       <thead>
          <tr>
             <th><a></a>Name</th>
+            <th>Brand</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Image</th>
@@ -15,6 +16,11 @@
          {{#each toyList }}
          <tr>
             <td>{{ name }}</td>
+            <td>
+               <a href="/brand/detail/{{brand._id}}">
+                  {{ brand.name }}
+               </a>
+            </td>
             <td>${{ price }}</td>
             <td>{{ quantity }}</td>
             <td>
@@ -24,7 +30,8 @@
             </td>
             <td>
                <a href="/toy/addToCart/{{ _id }}">Buy</a> |
-               <a href="/toy/edit/{{ _id }}">Edit</a>
+               <a href="/toy/edit/{{ _id }}">Edit</a> |
+               <a href="/toy/delete/{{ _id }}">Delete</a>
             </td>
          </tr>
          {{/each}}

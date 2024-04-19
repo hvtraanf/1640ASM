@@ -1,11 +1,12 @@
 var express = require('express');
 var ToysModel = require('../models/ToysModel');
+var BrandModel = require('../models/BrandModel');
 
 var router = express.Router();
 
 // Get all toys
 router.get('/list', async (req, res) => {
-   var toyList = await ToysModel.find({});
+   var toyList = await ToysModel.find({}).where('quantity').gt(0).populate('brand');
    res.render('toy/list', { toyList, user: req.session.user });
 });
 

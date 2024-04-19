@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
         req.body.password = hashedPassword;
 
         await UserModel.create(user);
-        res.redirect('/');
+        res.redirect('/user/');
     }
 })
 
@@ -35,21 +35,25 @@ router.get('/login', async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         var check = await UserModel.findOne({ username: req.body.username });
+        let message = "";
         if (!check) {
-            res.render('login', {message : req.flash('danger', 'User not found')})
+            message = "Error: User not found"
+            res.render('login', { message })
+            console.log(message)
         }
         // Compare the hashed password from the database with the plaintext password
         var isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
         if (!isPasswordMatch) {
-            res.render('login', {message : req.flash('danger', 'Wrong Password')})
+            message = "Wrong Password"
+            res.render('login', { message })
         }
         else {
             req.session.user = check; //Create Session
-            res.redirect('back');
+            res.redirect('/user/login');
         }
     }
     catch {
-        res.render('login', {message : req.flash('danger','User not found')})
+        res.render('login', { message: req.flash('danger', 'User not found') })
     }
 });
 

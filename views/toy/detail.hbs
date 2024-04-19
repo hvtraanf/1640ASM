@@ -1,10 +1,10 @@
 <div class="row">
    <div class="col-md-5 text-center">
       <img src="{{ toy.imageUrl }}" width="300" height="300">
-      <h3>Name: {{ toy.name }}</h3>
    </div>
    <div class="col-md-7">
       <ul>
+         <li>Name: {{ toy.name }}</li>
          <li>Price: {{ toy.price }}</li>
          <li>Quantity: {{ toy.quantity }}</li>
          <a href="/toy/edit/{{ _id }}">Buy</a>
