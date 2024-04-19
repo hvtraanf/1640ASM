@@ -14,12 +14,12 @@
 </div>
 
 <script>
-function validateForm() {
-  var password = document.getElementById('password').value;
-  if (password.length < 8) {
-    alert('Password must be longer than 8 characters');
-    return false;
+  function validateForm() {
+    var password = document.getElementById('password').value;
+    if (password.length < 8) {
+      alert('Password must be longer than 8 characters');
+      return false;
+    }
+    return true;
   }
-  return true;
-}
 </script>
