@@ -10,6 +10,11 @@ var UserSchema = mongoose.Schema(
       type: String,
       required: true,
       minLength: 8
+    },
+    role:{
+      type: String,
+      required: true,
+      default: 'user'
     }
   }
 );

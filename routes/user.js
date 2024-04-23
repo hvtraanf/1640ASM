@@ -11,19 +11,22 @@ router.get('/register', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     var user = req.body;
+    let message ="";
     var existingUser = await UserModel.findOne({ username: req.body.username });
 
     if (existingUser) {
-        res.send("User already existed, consider login or choose a different username");
+        message = "User already existed";
+        res.render('register', { message });
     }
     else {
+        message = "User created succesfully, please log in";
         var saltRounds = 10;
         var hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
         req.body.password = hashedPassword;
 
         await UserModel.create(user);
-        res.redirect('/user/');
+        res.render('login', { message });
     }
 })
 
@@ -49,7 +52,7 @@ router.post("/login", async (req, res) => {
         }
         else {
             req.session.user = check; //Create Session
-            res.redirect('/user/login');
+            res.redirect('/');
         }
     }
     catch {

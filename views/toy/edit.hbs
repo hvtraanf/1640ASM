@@ -7,6 +7,12 @@
         <input type="number" name="price" value="{{ toy.price }}"><br><br>
         <label for="">Quantity</label><br>
         <input type="number" name="quantity" value="{{ toy.quantity }}"><br><br>
+        <label class="form-label" for="toyImage">Brand</label>
+          <select class="form-control" name="brand" id="">
+          {{#each brand }}
+            <option value="{{ _id }}">{{ name }}</option>
+          {{/each}}
+        </select>
         <input type="submit" value="Edit">
     </form>
 </div>

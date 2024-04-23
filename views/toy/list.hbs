@@ -1,44 +1,61 @@
 <body>
-   <h1>Toys List</h1>
-   <a class="btn paper-btn mb-3" href="/toy/add">Add new Toy</a>
-   <table class="table table-info" id="toyTable">
-      <thead>
-         <tr>
-            <th><a></a>Name</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Image</th>
-            <th>Action</th>
-         </tr>
-      </thead>
-      <tbody>
-         {{#each toyList }}
-         <tr>
-            <td>{{ name }}</td>
-            <td>
-               <a href="/brand/detail/{{brand._id}}">
-                  {{ brand.name }}
-               </a>
-            </td>
-            <td>${{ price }}</td>
-            <td>{{ quantity }}</td>
-            <td>
-               <a href="/toy/detail/{{_id}}">
-                  <img src="{{imageUrl}}" width="100" height="100">
-               </a>
-            </td>
-            <td>
-               <a href="/toy/addToCart/{{ _id }}">Buy</a> |
-               <a href="/toy/edit/{{ _id }}">Edit</a> |
-               <a href="/toy/delete/{{ _id }}">Delete</a>
-            </td>
-         </tr>
-         {{/each}}
-      </tbody>
-   </table>
+   <center>
+      <h1>Toys List</h1>
+      <br>
+      <a class="btn paper-btn mb-3 mx-auto" href="/toy/add">Add new Toy</a>
+      <a class="btn paper-btn mb-3 mx-auto" href="/brand/add">Add new Brand</a>
+   </center>
+   <center>
+      <table class="table table-info" id="toyTable">
+         <thead>
+            <style>
+               table {
+                  border-collapse: separate;
+                  border-spacing: 30px;
+                  /* adjust this value to your liking */
+               }
+            </style>
+            <tr>
+               <th><a></a>Name</th>
+               <th>Brand</th>
+               <th>Price</th>
+               <th>Quantity</th>
+               <th>Image</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            {{#each toyList }}
+            <tr>
+               <td>{{ name }}</td>
+               <td>
+                  <a href="/brand/detail/{{brand._id}}">
+                     {{ brand.name }}
+                  </a>
+               </td>
+               <td>${{ price }}</td>
+               <td>{{ quantity }}</td>
+               <td>
+                  <a href="/toy/detail/{{_id}}">
+                     <img src="{{imageUrl}}" width="100" height="100">
+                  </a>
+               </td>
+               <td>
+                  {{!-- {{#if isAdmin}} --}}
+                  <a href="/toy/edit/{{ _id }}">Edit</a> |
+                  <a href="/toy/delete/{{ _id }}">Delete</a> |
+                  {{!-- {{/if}} --}}
+                  <a href="/toy/addToCart/{{ _id }}">Buy</a>
+               </td>
+            </tr>
+            {{/each}}
+         </tbody>
+      </table>
+   </center>
 
    <script>
+      var isAdmin = {{ isAdmin }};
+
       // Get all the headers
       var headers = document.querySelectorAll("th");
 
@@ -80,10 +97,13 @@
             }
          });
 
-         // Replace the table body with the sorted rows
-         var newTbody = document.createElement("tbody");
-         rows.forEach(row => newTbody.appendChild(row));
-         table.replaceChild(newTbody, tbody);
+         // Remove existing rows from the table
+         tbody.innerHTML = '';
+
+         // Append the sorted rows to the table body
+         rows.forEach(function (row) {
+            tbody.appendChild(row);
+         });
       }
    </script>
 </body>

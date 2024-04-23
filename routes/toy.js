@@ -6,14 +6,24 @@ var router = express.Router();
 
 // Get all toys
 router.get('/list', async (req, res) => {
+   var isAdmin = (req.session.user && req.session.user.role === 'admin');
+   // if(req.session.user && req.session.user.role === 'admin'){
+   //    isAdmin = true;
+   // }
    var toyList = await ToysModel.find({}).where('quantity').gt(0).populate('brand');
-   res.render('toy/list', { toyList, user: req.session.user });
+   res.render('toy/list', { toyList, user: req.session.user, isAdmin: (req.session.user && req.session.user.role === 'admin') });
+   console.log(isAdmin);
 });
 
 //Create Toys
 router.get('/add', async (req, res) => {
-   res.render('toy/add', { user: req.session.user });
-})
+   if (req.session.user && req.session.user.role === 'admin') {
+      var brand = await BrandModel.find({});
+      res.render('toy/add', { user: req.session.user, brand });
+   } else {
+      res.redirect('/toy/list');
+   }
+});
 
 router.post('/add', async (req, res) => {
    var toy = req.body;
@@ -23,16 +33,29 @@ router.post('/add', async (req, res) => {
 
 //Delete Toys
 router.get('/delete/:id', async (req, res) => {
-   let id = req.params.id;
-   await ToysModel.findByIdAndDelete(id);
-   res.redirect('/toy/list');
+   if (req.session.user && req.session.user.role === 'admin') {
+
+      let id = req.params.id;
+      await ToysModel.findByIdAndDelete(id);
+      res.redirect('/toy/list');
+   }
+   else {
+      res.redirect('/toy/list');
+   }
 })
 
 //Edit Toys
 router.get('/edit/:id', async (req, res) => {
-   let id = req.params.id;
-   let toy = await ToysModel.findById(id);
-   res.render('toy/edit', { toy, user: req.session.user });
+   if (req.session.user && req.session.user.role === 'admin') {
+      let id = req.params.id;
+      var brand = await BrandModel.find({});
+      let toy = await ToysModel.findById(id);
+      res.render('toy/edit', { toy, brand, user: req.session.user });
+   }
+   else {
+
+      res.redirect('/toy/list');
+   }
 })
 
 router.post('/edit/:id', async (req, res) => {
