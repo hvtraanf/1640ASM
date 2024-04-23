@@ -1,13 +1,28 @@
-<div class="row">
-   <div class="col-md-5 text-center">
-      <img src="{{ toy.imageUrl }}" width="300" height="300">
-   </div>
-   <div class="col-md-7">
-      <ul>
-         <li>Name: {{ toy.name }}</li>
-         <li>Price: {{ toy.price }}</li>
-         <li>Quantity: {{ toy.quantity }}</li>
-         <a href="/toy/edit/{{ _id }}">Buy</a>
-      </ul>
-   </div>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container mx-auto">
+  <div class="row mt-5">
+    <div class="col-md-5 text-center justify-content-center">
+      <img src="{{ toy.imageUrl }}" width="300" height="300" class="img-thumbnail">
+    </div>
+    <div class="col-md-7">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>{{ toy.name }}</h2>
+          <h4>${{ toy.price }}</h4>
+          <p>{{ toy.description }}</p>
+          <h4>Quantity: {{ toy.quantity }}</h4>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-primary mt-2" type="button">Buy</button>
+          {{#if isAdmin}}
+            <div class="mt-3">
+              <a class="btn btn-primary" href="/toy/edit/{{toy._id}}">Edit Toy</a>
+              <a class="btn btn-primary" href="/toy/delete/{{toy._id}}">Delete</a>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

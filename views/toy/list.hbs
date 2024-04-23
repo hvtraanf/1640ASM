@@ -1,109 +1,122 @@
-<body>
-   <center>
-      <h1>Toys List</h1>
-      <br>
-      <a class="btn paper-btn mb-3 mx-auto" href="/toy/add">Add new Toy</a>
-      <a class="btn paper-btn mb-3 mx-auto" href="/brand/add">Add new Brand</a>
-   </center>
-   <center>
-      <table class="table table-info" id="toyTable">
-         <thead>
-            <style>
-               table {
-                  border-collapse: separate;
-                  border-spacing: 30px;
-                  /* adjust this value to your liking */
-               }
-            </style>
-            <tr>
-               <th><a></a>Name</th>
-               <th>Brand</th>
-               <th>Price</th>
-               <th>Quantity</th>
-               <th>Image</th>
-               <th>Action</th>
-            </tr>
-         </thead>
-         <tbody>
-            {{#each toyList }}
-            <tr>
-               <td>{{ name }}</td>
-               <td>
-                  <a href="/brand/detail/{{brand._id}}">
-                     {{ brand.name }}
-                  </a>
-               </td>
-               <td>${{ price }}</td>
-               <td>{{ quantity }}</td>
-               <td>
-                  <a href="/toy/detail/{{_id}}">
-                     <img src="{{imageUrl}}" width="100" height="100">
-                  </a>
-               </td>
-               <td>
-                  {{!-- {{#if isAdmin}} --}}
-                  <a href="/toy/edit/{{ _id }}">Edit</a> |
-                  <a href="/toy/delete/{{ _id }}">Delete</a> |
-                  {{!-- {{/if}} --}}
-                  <a href="/toy/addToCart/{{ _id }}">Buy</a>
-               </td>
-            </tr>
-            {{/each}}
-         </tbody>
-      </table>
-   </center>
+<!DOCTYPE html>
+<html>
 
-   <script>
-      var isAdmin = {{ isAdmin }};
+<head>
+   <Center>
 
-      // Get all the headers
-      var headers = document.querySelectorAll("th");
-
-      // Initialize the sort order to 'asc' (ascending)
-      var sortOrder = 'asc';
-
-      // Loop through each header
-      for (let i = 0; i < headers.length; i++) {
-         // Add a click event listener to each header
-         headers[i].addEventListener("click", function () {
-            sortTable(i, sortOrder);
-            // Toggle the sort order
-            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-         });
+      <h1 style="font-size: 2rem; font-style: italic;">ATN Toys</h1>
+   </Center>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css"
+      integrity="sha512-nSAEI+AJviWxyWlHArb2/57ZF3jGbmYr3Ky3/2PsqhkFh+DkDG+zWfBKiWk5uGvO7zWKZMB8E8MQBw/M3Jwew=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
+      th {
+         cursor: pointer;
       }
 
-      function sortTable(columnIndex, order) {
-         var table = document.querySelector("table");
-         var tbody = table.querySelector("tbody");
+      .toy-image {
+         width: 100px;
+         height: 100px;
+         object-fit: cover;
+      }
 
-         // Clone the rows
-         var rows = Array.from(tbody.querySelectorAll("tr")).map(row => row.cloneNode(true));
+      .action-buttons {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         gap: 5px;
+      }
 
-         // Sort the cloned rows
-         rows.sort(function (rowA, rowB) {
-            var cellA = rowA.cells[columnIndex].textContent;
-            var cellB = rowB.cells[columnIndex].textContent;
+      .sorted {
+         background-color: #eee;
+      }
+   </style>
+</head>
 
-            // Check if the values are numbers or strings
-            var numA = Number(cellA);
-            var numB = Number(cellB);
-            var isNumber = !isNaN(numA) && !isNaN(numB);
+<body>
+   <div class="container mt-5">
+      <div class="row">
+         <div class="col-md-8 offset-md-2">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+               {{#if isAdmin}}
+               <div>
+                  <a class="btn btn-primary" href="/toy/add">Add new Toy</a>
+                  <a class="btn btn-primary" href="/brand/add">Add new Brand</a>
+               </div>
+               {{/if}}
+            </div>
+            <table class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th id="name"><a href="#">Name</a></th>
+                     <th>Brand</th>
+                     <th>Price</th>
+                     <th>Quantity</th>
+                     <th>Image</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {{#each toyList}}
+                  <tr>
+                     <td>{{name}}</td>
+                     <td>
+                        <a href="/brand/detail/{{brand._id}}">
+                           {{brand.name}}
+                        </a>
+                     </td>
+                     <td>${{price}}</td>
+                     <td>{{quantity}}</td>
+                     <td>
+                        <a href="/toy/detail/{{_id}}"> 
+                        <img class="toy-image" src="{{imageUrl}}" alt="{{name}}">
+                        </a>
+                     </td>
+                     <td class="action-buttons">
+                        <a class="btn btn-primary" href="/toy/addToCart/{{_id}}">Buy</a>
+                     </td>
+                  </tr>
+                  {{/each}}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+   <script>
+      const headers = document.querySelectorAll('th');
+      let currentSortIndex = 0;
+      let sortAscending = true;
 
-            // Apply the appropriate comparison method
-            if (isNumber) {
-               return (numA - numB) * (order === 'asc' ? 1 : -1);
+      headers.forEach((header, index) => {
+         header.addEventListener('click', () => {
+            sortTable(index);
+         });
+      });
+
+      function sortTable(index) {
+         const rows = Array.from(document.querySelectorAll('tbody tr'));
+         const sortedRows = rows.sort((a, b) => {
+            const aValue = a.children[index].textContent.trim();
+            const bValue = b.children[index].textContent.trim();
+
+            if (sortAscending) {
+               return aValue.localeCompare(bValue);
             } else {
-               return cellA.localeCompare(cellB) * (order === 'asc' ? 1 : -1);
+               return bValue.localeCompare(aValue);
             }
          });
 
-         // Remove existing rows from the table
-         tbody.innerHTML = '';
-
-         // Append the sorted rows to the table body
-         rows.forEach(function (row) {
-            tbody.appendChild(row);
+         sortedRows.forEach((row, i) => {
+            row.style.transition = `all ${i * 50}ms ease-in-out`;
+            document.querySelector('tbody').appendChild(row);
          });
+
+         headers[currentSortIndex].classList.remove('sorted');
+         headers[index].classList.add('sorted');
+         currentSortIndex = index;
+         sortAscending = !sortAscending;
       }
    </script>
 </body>
+
+</html>

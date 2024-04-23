@@ -67,9 +67,11 @@ router.post('/edit/:id', async (req, res) => {
 
 //Details
 router.get('/detail/:id', async (req, res) => {
+   
+   var isAdmin = (req.session.user && req.session.user.role === 'admin');
    let id = req.params.id;
    let toy = await ToysModel.findById(id);
-   res.render('toy/detail', { toy, user: req.session.user });
+   res.render('toy/detail', { toy, user: req.session.user, isAdmin: req.session.user && req.session.user.role === 'admin' });
 })
 
 //Add toy to cart
