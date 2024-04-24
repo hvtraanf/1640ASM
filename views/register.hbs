@@ -1,17 +1,22 @@
-<div style="display: flex; justify-content: center; align-items: center; height: 25vh;">
-  <div style="width: 300px; background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<div class="d-flex justify-content-center align-items-center" style="height: 25vh;">
+  <div class="card" style="width: 300px;">
     {{#if message}}
-            <div class = "alert alert-danger">{{message}}</div>
-        {{/if}}
-    <form action="/user/register" method="post" onsubmit="return validateForm()">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-
-      <button type="submit">Sign Up</button>
-      <p>Have an account? <a href="/user/login">Login Here</a></p>
+      <div class="alert alert-danger">{{message}}</div>
+    {{/if}}
+    <form class="card-body" action="/user/register" method="post" onsubmit="return validateForm()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <p class="text-center">Have an account? <a href="/user/login" class="card-link">Login Here</a></p>
     </form>
   </div>
 </div>
