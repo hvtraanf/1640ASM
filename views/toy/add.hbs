@@ -59,8 +59,15 @@
           {{#each brand }}
             <option value="{{ _id }}">{{ name }}</option>
           {{/each}}
-        </select>
+          </select>
+          <label class="form-label" for="toyCategory">Category</label>
+          <select class="form-control" name="category" id="">
+          {{#each category }}
+            <option value="{{ _id }}">{{ name }}</option>
+          {{/each}}
+          </select>
         </div>
+        
         <button type="submit" class="btn submit-btn">Add</button>
       </form>
     </div>

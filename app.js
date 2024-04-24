@@ -14,6 +14,7 @@ var toysRouter = require('./routes/toy');
 var userRouter = require('./routes/user');
 var cartRouter = require('./routes/cart');
 var brandRouter = require('./routes/brand');
+var categoryRouter = require('./routes/category');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/toy', toysRouter);
 app.use('/user', userRouter);
 app.use('/cart', cartRouter);
 app.use('/brand', brandRouter);
+app.use('/category', categoryRouter);
 
 app.get('*', (req, res, next) => {
   res.locals.cartRouter = req.session.cartRouter;

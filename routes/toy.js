@@ -1,17 +1,15 @@
 var express = require('express');
 var ToysModel = require('../models/ToysModel');
 var BrandModel = require('../models/BrandModel');
+var CategoryModel = require('../models/CategoryModel');
 
 var router = express.Router();
 
 // Get all toys
 router.get('/list', async (req, res) => {
    var isAdmin = (req.session.user && req.session.user.role === 'admin');
-   // if(req.session.user && req.session.user.role === 'admin'){
-   //    isAdmin = true;
-   // }
-   var toyList = await ToysModel.find({}).where('quantity').gt(0).populate('brand');
-   res.render('toy/list', { toyList, user: req.session.user, isAdmin: (req.session.user && req.session.user.role === 'admin') });
+   var toyList = await ToysModel.find({}).where('quantity').gt(0).populate('brand').populate('category');
+   res.render('toy/list', { toyList, user: req.session.user, isAdmin: req.session.user && req.session.user.role === 'admin' });
    console.log(isAdmin);
 });
 
@@ -19,7 +17,8 @@ router.get('/list', async (req, res) => {
 router.get('/add', async (req, res) => {
    if (req.session.user && req.session.user.role === 'admin') {
       var brand = await BrandModel.find({});
-      res.render('toy/add', { user: req.session.user, brand });
+      var category = await CategoryModel.find({});
+      res.render('toy/add', { user: req.session.user, brand, category });
    } else {
       res.redirect('/toy/list');
    }
