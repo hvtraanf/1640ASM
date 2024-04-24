@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
             res.render('login', { message })
             console.log(message)
         }
-        // Compare the hashed password from the database with the plaintext password
+        // Check Password hash
         var isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
         if (!isPasswordMatch) {
             message = "Wrong Password"
@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-//logout
+//logout feature
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {

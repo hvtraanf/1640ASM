@@ -1,13 +1,18 @@
-<div class="row">
-   <div class="col-md-5 text-center">
-      <img src="{{ brand.logoUrl }}" width="300" height="300">
-   </div>
-   <div class="col-md-7">
-      <ul>
-         <li>Name: {{ brand.name }}</li>
-         <li>Description: {{ brand.description }}</li>
-         <li>Country: {{ brand.country }}</li>
-         <li>Website: <a href="{{brand.website}}">{{brand.website}}</a></li>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-5 text-center">
+      <img src="{{ brand.logoUrl }}" class="img-fluid" alt="Brand Logo">
+    </div>
+    <div class="col-md-7">
+      <ul class="list-group">
+        <li class="list-group-item">Name: {{ brand.name }}</li>
+        <li class="list-group-item">Description: {{ brand.description }}</li>
+        <li class="list-group-item">Country: {{ brand.country }}</li>
+        <li class="list-group-item">Website: <a href="{{brand.website}}" class="text-decoration-none">{{brand.website}}</a></li>
       </ul>
-   </div>
+    </div>
+  </div>
 </div>
